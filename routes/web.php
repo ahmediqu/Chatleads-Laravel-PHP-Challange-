@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('posts', 'PostController');
+Route::get('details/{slug}', 'PostController@details');
 Route::get('get-data', 'PostController@getData');
 Route::post('posts/delete', 'PostController@destroy');
 Route::post('posts/edit', 'PostController@edit');
