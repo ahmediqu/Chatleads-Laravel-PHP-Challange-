@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Films;
+use App\Comment;
+use Session;
+use DB;
+use Auth;
 class PostController extends Controller
 {
     /**
@@ -21,8 +25,28 @@ class PostController extends Controller
     {
 
         $data = [];
-        $data['flims'] = Films::findOrFail($slug);;
+        $data['flims'] = Films::findOrFail($slug);
+
+        // $data['commnets'] = Comment::where('flims_id',$data['flims']->id)->get();
+        $data['commnets'] = DB::table('comments')
+        ->select('users.name as userName','comments.comment')
+        ->leftJoin('users','users.id','=','comments.user_id')
+        ->leftJoin('films','films.id','=','comments.flims_id')
+        ->where('films.id',$data['flims']->id)
+        ->get();
         return view('flims.details',$data);
+    }
+
+    public function saveComment(Request $request){
+
+        $c = new Comment();
+        $c->user_id = Auth::user()->id;
+        $c->flims_id = $request->flims_id;
+        $c->comment = $request->comment;
+        Session::flash('message','Thank you for your comment');
+        $c->save();
+
+        return back();
     }
 
     /**

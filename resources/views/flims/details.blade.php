@@ -19,28 +19,33 @@
 			<div class="card">
 				
 				<div class="card-body">
-					<h5 class="card-title">Comments</h5>
-					<div class="form-group">
-						<textarea name="commnets" id="" cols="30" rows="4" class="form-control"></textarea>
-					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-info font-weight-bold">Comment</button>
-					</div>
-					
+					<form action="{{url('comment')}}"  method="post">
+						@csrf
+						<input type="hidden" name="flims_id" value="{{$flims->id}}">
+						<h5 class="card-title">Comments</h5>
+						<div class="form-group">
+							<textarea name="comment" id="" cols="30" rows="4" class="form-control" required></textarea>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-info font-weight-bold">Comment</button>
+						</div>
+					</form>
 				</div>
 			</div>
 
 			<div class="card  mt-3">
 				<div class="card-body">
+					@foreach($commnets as $comment)
 					<div class="all-comment mt-3 mb-3">
 						<div class="media border-1">
 							<img src="https://img.pngio.com/user-logos-user-logo-png-1920_1280.png" class="mr-3" alt="..." style="height: 64px;">
 							<div class="media-body">
-								<h5 class="mt-0">Media heading</h5>
-								Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+								<h5 class="mt-0">{{$comment->userName}}</h5>
+								{{$comment->comment}}
 							</div>
 						</div>
 					</div>
+					@endforeach
 				</div>
 			</div>
 		</div>
