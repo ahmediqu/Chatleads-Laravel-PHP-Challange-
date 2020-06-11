@@ -1,5 +1,5 @@
 ## demo 
-![alt text](https://github.com/[ahmediqu]/[Chatleads-Laravel-PHP-Challange-]/blob/[master]/details.png?raw=true)
+![alt text](https://github.com/ahmediqu/Chatleads-Laravel-PHP-Challange-/blob/master/details.png?raw=true)
 
 
 ## Features
