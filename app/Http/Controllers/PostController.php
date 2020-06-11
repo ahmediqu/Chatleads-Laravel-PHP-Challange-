@@ -24,15 +24,20 @@ class PostController extends Controller
     public function details($slug)
     {
 
-        $data = [];
-        $data['flims'] = Films::findOrFail($slug);
 
+        $data = [];
+//         $data['flims'] = Films::find($slug);
+     
+// echo "<pre>";
+// print_r($data['flims']);
+// exit();
+        $data['flims'] = DB::table('films')->where('slug',$slug)->first();
         // $data['commnets'] = Comment::where('flims_id',$data['flims']->id)->get();
         $data['commnets'] = DB::table('comments')
-        ->select('users.name as userName','comments.comment')
+        ->select('users.name as userName','users.id as userId','comments.comment','comments.flims_id','comments.id as commentId','comments.user_id','films.id as flimsId')
         ->leftJoin('users','users.id','=','comments.user_id')
         ->leftJoin('films','films.id','=','comments.flims_id')
-        ->where('films.id',$data['flims']->id)
+        ->where('comments.flims_id',$data['flims']->id)
         ->get();
         return view('flims.details',$data);
     }
